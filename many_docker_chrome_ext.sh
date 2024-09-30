@@ -57,7 +57,7 @@ while [ "$i" -le $noOfNodes ]; do
             - $(( 3031 + 2 * (i - 1) )):3001
           shm_size: "1gb"
           restart: unless-stopped
-      EOF
+EOF
       
       if [ ! -f "docker-compose.yaml" ]; then
           echo "Failed to create docker-compose.yaml. Exiting..."
