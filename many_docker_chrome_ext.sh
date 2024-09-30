@@ -1,6 +1,6 @@
 #!/bin/bash
 
-noOfNodes=5
+noOfNodes=1
 i=1
 
 while [ "$i" -le $noOfNodes ]; do
@@ -35,28 +35,28 @@ while [ "$i" -le $noOfNodes ]; do
       # dont forget to change ports
       
       cat <<EOF > docker-compose.yaml
-      ---
-      services:
-        chromium:
-          image: lscr.io/linuxserver/chromium:latest
-          container_name: $CONTAINER_NAME_const
-          security_opt:
-            - seccomp:unconfined
-          environment:
-            - CUSTOM_USER=$CUSTOM_USER
-            - PASSWORD=$PASSWORD
-            - PUID=$PUID_const
-            - PGID=$PUID_const
-            - TZ=$TIMEZONE
-            - LANG=en_US.UTF-8
-            - CHROME_CLI=https://google.com/
-          volumes:
-            - /root/$CONTAINER_NAME_const/config:/config
-          ports:
-            - $(( 3030 + 2 * (i - 1) )):3000
-            - $(( 3031 + 2 * (i - 1) )):3001
-          shm_size: "1gb"
-          restart: unless-stopped
+---
+services:
+  chromium:
+    image: lscr.io/linuxserver/chromium:latest
+    container_name: $CONTAINER_NAME_const
+    security_opt:
+      - seccomp:unconfined
+    environment:
+      - CUSTOM_USER=$CUSTOM_USER
+      - PASSWORD=$PASSWORD
+      - PUID=$PUID_const
+      - PGID=$PUID_const
+      - TZ=$TIMEZONE
+      - LANG=en_US.UTF-8
+      - CHROME_CLI=https://google.com/
+    volumes:
+      - /root/$CONTAINER_NAME_const/config:/config
+    ports:
+      - $(( 3030 + 2 * (i - 1) )):3000
+      - $(( 3031 + 2 * (i - 1) )):3001
+    shm_size: "1gb"
+    restart: unless-stopped
 EOF
       
       if [ ! -f "docker-compose.yaml" ]; then
@@ -70,7 +70,7 @@ EOF
       
       echo "Running Chromium container..."
       cd $HOME/$NEW_FOLDER
-      docker-compose up -d
+      #docker-compose up -d
 
       i=$(( i + 1 ))
 done
