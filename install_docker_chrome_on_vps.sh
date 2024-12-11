@@ -35,8 +35,8 @@ if [ -z "$TIMEZONE" ]; then
 fi
 echo "Server timezone detected: $TIMEZONE"
 
-CUSTOM_USER=$(openssl rand -hex 4)  
-PASSWORD=$(openssl rand -hex 12)    
+CUSTOM_USER=$1  
+PASSWORD=$2    
 echo "Generated username: $CUSTOM_USER"
 echo "Generated password: $PASSWORD"
 
